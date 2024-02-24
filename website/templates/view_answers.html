@@ -1,0 +1,30 @@
+<!--view_answers.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ question.title }}</h2>
+  <p>{{ question.content }}</p>
+  <p>Posted by: {{ question.user.first_name }}</p>
+  
+  <hr>
+  
+  <h3>Answers</h3>
+  
+  {% for answer in answers %}
+    <div class="answer">
+      <p>{{ answer.content }}</p>
+      <p>Posted by: {{ answer.user.first_name }}</p>
+      
+      <h4>Replies</h4>
+      {% for reply in answer.replies %}
+        <div class="reply">
+          <p>{{ reply.content }}</p>
+          <p>Posted by: {{ reply.user.first_name }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <hr>
+  {% endfor %}
+  
+  
+{% endblock %}

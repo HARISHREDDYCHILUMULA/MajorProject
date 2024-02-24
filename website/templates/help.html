@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Help{% endblock %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        line-height: 1.6;
+    }
+
+    .step {
+        margin-bottom: 30px;
+    }
+
+    .step h2 {
+        margin-bottom: 10px;
+    }
+
+    .step img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%; /* Ensure images are responsive and fit within container */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .step p {
+        margin-top: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    .rules {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+</style>
+<div class="container">
+    <h1>Connect 4 Tutorial</h1>
+    
+    <div class="step">
+        <h2>Step 1: Start the Game</h2>
+        <img src="/static/images/starting.jpeg" alt="Start Game">
+        <p>Start the Connect 4 game by clicking on the 'Play' button.</p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 2: Drop Tokens</h2>
+        <img src="/static/images/dropping.jpeg" alt="Drop Tokens">
+        <p>Take turns with your opponent to drop your colored tokens into the columns. The goal is to connect four of your tokens vertically, horizontally, or diagonally.</p>
+    </div>
+    
+    <div class="step">
+        <h2>Step 3: Win the Game</h2>
+        <img src="/static/images/winning.jpeg" alt="Win Game">
+        <p>If you successfully connect four of your tokens, you win the game! If the board fills up before either player achieves four in a row, the game is a draw.</p>
+    </div>
+    <div class="rules">
+        
+        <h2>Rules:</h2>
+        <ol>
+            <li>The game is played on a adjustable grid initially consists of 12 columns wide and 7 rows high.</li>
+            <li>Players take turns dropping one colored disc (blue or orange in random) from the top into the grid.</li>
+            <li>The pieces fall straight down, occupying the lowest available space within the column.</li>
+            <li>The game continues until one player forms a line of four of their own colored discs horizontally, vertically, or diagonally.</li>
+            <li>If the grid is filled with discs and no player has won, the game is a draw.</li>
+        </ol>
+
+        <p>For more detailed rules and strategies, you can refer to the official Connect 4 rulebook or online resources.</p>
+    </div>
+    <p>Ready to play? Click the button below to start!</p>
+    <a href="/startgame" class="btn">Play Connect 4</a>
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Custom styles for view_question.html */
+
+/* Main container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Question title */
+h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Question content */
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Posted by */
+.post-info {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Answers section */
+.answer {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Reply form */
+.reply-form {
+  margin-top: 10px;
+}
+
+/* Reply button */
+.reply-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reply-button:hover {
+  background-color: #0056b3;
+}
+
+/* Newly submitted answer */
+.new-answer {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+/* Form input fields */
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+/* Submit button */
+.submit-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+</style>
+<h2>{{ question.title }}</h2>
+<p>{{ question.content }}</p>
+<p>Posted by: {{ question.user.first_name }}</p>
+  
+<hr>
+  
+
+  
+{% for answer in answers %}
+<h3>Answer</h3>
+  <div class="answer">
+    <p>{{ answer.content }}</p>
+    <p>Posted by: {{ answer.user.first_name }}</p>
+    
+    {% if answer.replies %}  <!-- Check if there are replies -->
+      <h4>Replies</h4>
+      {% for reply in answer.replies %}
+        <div class="reply">
+          <p>{{ reply.content }}</p>
+          <p>Posted by: {{ reply.user.first_name }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+    
+    <form method="post" action="{{ url_for('views.post_reply', answer_id=answer.id) }}">
+      <textarea name="content" placeholder="Reply to this answer" required></textarea>
+      <button type="submit">Reply</button>
+    </form>
+  </div>
+  <hr>
+{% endfor %}
+
+<!-- Display the newly submitted answer -->
+{% if new_answer %}
+  <div class="answer">
+    <p>{{ new_answer.content }}</p>
+    <p>Posted by: {{ new_answer.user.first_name }}</p>
+    <!-- You can also include a form for replies to this answer if needed -->
+  </div>
+  <hr>
+{% endif %}
+
+<form method="post" action="{{ url_for('views.view_question', question_id=question.id) }}">
+  <textarea name="content" placeholder="Your answer" required></textarea>
+  <button type="submit">Post Answer</button>
+</form>
+
+{% endblock %}

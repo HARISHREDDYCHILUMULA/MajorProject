@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+      
+       
+  
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user.id==1 %}
+        <h1>Messages</h1>
+        <ul>
+            {% for message in messages %}
+                <li>{{ message[1] }}: {{ message[0] }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>You are not allowed to view this page.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

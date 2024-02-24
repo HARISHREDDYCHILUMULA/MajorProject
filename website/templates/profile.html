@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<style>
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-info {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff; /* Add a border to the profile picture */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+    }
+    
+    .profile-name {
+        margin-top: 10px;
+        font-size: 24px;
+        color: #333;
+    }
+    
+    .profile-email {
+        color: #666;
+        margin-bottom: 20px;
+    }
+    
+    .stats {
+        margin-bottom: 30px;
+    }
+    
+    .stats-item {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: #333;
+    }
+    
+    .change-password-form {
+        margin-top: 30px;
+    }
+    
+    .change-password-form h3 {
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    .change-password-form label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+    }
+    
+    .change-password-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    .change-password-form input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .change-password-form input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    
+    .logout-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    
+    .logout-btn:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<div class="container">
+    <div class="profile-info">
+        <!-- <img src="" alt="Profile Picture" class="profile-pic"> -->
+        <div class="profile-name">User: {{ user.first_name }}</div>
+        <div class="profile-email">Email: {{ user.email }}</div>
+    </div>
+    
+    {% if game %}
+    <div class="stats">
+        <div class="stats-item">
+            <strong>Total Games Played: {{ game.played }}</strong>
+        </div>
+        <div class="stats-item">
+            <strong>Win/Loss Ratio:
+                {% if game.played - game.won != 0 %}
+                    {{ '%0.2f'|format(game.won / (game.played - game.won)) }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </strong>
+        </div>
+        <div class="stats-item">
+            <strong>Win Percentage Ratio:
+                {% if game.played != 0 %}
+                    {{ '%0.2f'|format(game.won / game.played *100) }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </strong>
+        </div>
+    </div>
+{% else %}
+    <p>No game data available.</p>
+{% endif %}
+    
+    <div class="change-password-form">
+        <h3>Change Password</h3>
+        <form action="/changepassword" method="post">
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" name="current-password" required>
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new-password" required>
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <input type="submit" value="Change Password">
+        </form>
+    </div>
+    
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+
+{% endblock %}

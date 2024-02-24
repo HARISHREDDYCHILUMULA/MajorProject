@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Leaderboard</h1>
+
+    {% if top_user %}
+    <div class="top-user bg-light p-3 mt-4">
+        <h2>Top User</h2>
+        <p>User Name: 
+            {% set usercur = user.query.get(top_user.user_id) %}
+            {% if usercur %}
+                {{ usercur.first_name }}
+            {% else %}
+                User Not Found
+            {% endif %}
+        </p>
+        <p>Win Percentage: {{ '%0.2f'|format(top_user.percentage) }}</p>
+    </div>
+    {% else %}
+    <p class="mt-4">No users found.</p>
+    {% endif %}
+
+    <h2 class="mt-4">All Users</h2>
+    <div class="table-responsive">
+        <table class="table table-striped mt-2">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User Name</th>
+                    <th>Win Percentage</th>
+                    <th>Win/ Loss Ratio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ii, iuser in sorted_users %}
+                    {% set user_obj = user.query.get(iuser.user_id) %}
+                    <tr>
+                        <td>{{ ii + 1 }}</td>
+                        <td>{{ user_obj.first_name if user_obj else 'User Not Found' }}</td>
+                        <td>
+                            {% if iuser.win_loss_ratio is not none %}
+                                {{ '%0.2f'|format(iuser.percentage) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ sorted_users_played[ii].win_loss_ratio }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+            
+        </table>
+    </div>
+</div>
+{% endblock %}
